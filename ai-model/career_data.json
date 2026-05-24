@@ -1,0 +1,38 @@
+{
+  "primary_tech_field": [
+    "Backend Development",
+    "Blockchain & Web3",
+    "Cybersecurity",
+    "Data Science & ML",
+    "Database & Data Engineering",
+    "DevOps & Cloud",
+    "Embedded Systems & IoT",
+    "Frontend Development",
+    "Full-Stack Development",
+    "Game Development",
+    "Mobile Development",
+    "Product Management",
+    "QA & Testing",
+    "Site Reliability Engineering"
+  ],
+  "education_level": [
+    "Associate's Degree",
+    "Bachelor's Degree",
+    "Bootcamp",
+    "High School",
+    "Master's Degree",
+    "PhD"
+  ],
+  "employment_type": [
+    "Contract",
+    "Freelance",
+    "Full-time",
+    "Part-time"
+  ],
+  "work_arrangement": [
+    "Fully Remote",
+    "Hybrid",
+    "On-site",
+    "Remote"
+  ]
+}
