@@ -1,0 +1,240 @@
+{
+  "KSA": {
+    "label": "Saudi Vision 2030",
+    "flag": "\ud83c\uddf8\ud83c\udde6",
+    "color": "#006C35",
+    "sectors": [
+      {
+        "name": "Tourism & Hospitality",
+        "keywords": [
+          "hotel",
+          "tourism",
+          "travel",
+          "hospitality",
+          "guide"
+        ],
+        "demand": "Very High",
+        "growth": "+150% by 2030"
+      },
+      {
+        "name": "Technology & Digital",
+        "keywords": [
+          "software",
+          "data",
+          "cloud",
+          "cybersecurity",
+          "ai"
+        ],
+        "demand": "Very High",
+        "growth": "+200% by 2030"
+      },
+      {
+        "name": "Healthcare",
+        "keywords": [
+          "doctor",
+          "nurse",
+          "pharmacy",
+          "medical",
+          "health"
+        ],
+        "demand": "Very High",
+        "growth": "+80% by 2030"
+      },
+      {
+        "name": "Entertainment & Sports",
+        "keywords": [
+          "entertainment",
+          "sports",
+          "gaming",
+          "media",
+          "film"
+        ],
+        "demand": "High",
+        "growth": "+120% by 2030"
+      },
+      {
+        "name": "Renewable Energy",
+        "keywords": [
+          "energy",
+          "solar",
+          "environment",
+          "sustainability",
+          "green"
+        ],
+        "demand": "High",
+        "growth": "+90% by 2030"
+      },
+      {
+        "name": "Financial Services",
+        "keywords": [
+          "finance",
+          "banking",
+          "fintech",
+          "investment",
+          "accounting"
+        ],
+        "demand": "High",
+        "growth": "+60% by 2030"
+      }
+    ]
+  },
+  "UAE": {
+    "label": "UAE Vision 2030",
+    "flag": "\ud83c\udde6\ud83c\uddea",
+    "color": "#00732F",
+    "sectors": [
+      {
+        "name": "FinTech & Banking",
+        "keywords": [
+          "finance",
+          "fintech",
+          "banking",
+          "crypto",
+          "blockchain"
+        ],
+        "demand": "Very High",
+        "growth": "+180% by 2030"
+      },
+      {
+        "name": "AI & Smart Cities",
+        "keywords": [
+          "ai",
+          "machine learning",
+          "smart",
+          "data",
+          "cloud"
+        ],
+        "demand": "Very High",
+        "growth": "+250% by 2030"
+      },
+      {
+        "name": "Logistics & Trade",
+        "keywords": [
+          "logistics",
+          "supply chain",
+          "trade",
+          "transport",
+          "shipping"
+        ],
+        "demand": "High",
+        "growth": "+70% by 2030"
+      },
+      {
+        "name": "Healthcare Innovation",
+        "keywords": [
+          "medical",
+          "health",
+          "biotech",
+          "pharmaceutical",
+          "doctor"
+        ],
+        "demand": "Very High",
+        "growth": "+100% by 2030"
+      },
+      {
+        "name": "Space & Aviation",
+        "keywords": [
+          "space",
+          "aviation",
+          "aerospace",
+          "pilot",
+          "engineer"
+        ],
+        "demand": "High",
+        "growth": "+85% by 2030"
+      },
+      {
+        "name": "Creative Economy",
+        "keywords": [
+          "design",
+          "media",
+          "art",
+          "film",
+          "content",
+          "creative"
+        ],
+        "demand": "Medium-High",
+        "growth": "+60% by 2030"
+      }
+    ]
+  },
+  "Pakistan": {
+    "label": "Pakistan Vision 2035",
+    "flag": "\ud83c\uddf5\ud83c\uddf0",
+    "color": "#01411C",
+    "sectors": [
+      {
+        "name": "IT & Freelancing",
+        "keywords": [
+          "software",
+          "web",
+          "mobile",
+          "freelance",
+          "development"
+        ],
+        "demand": "Very High",
+        "growth": "+300% by 2035"
+      },
+      {
+        "name": "Agriculture Tech",
+        "keywords": [
+          "agriculture",
+          "farming",
+          "food",
+          "rural",
+          "crop"
+        ],
+        "demand": "High",
+        "growth": "+80% by 2035"
+      },
+      {
+        "name": "Education Technology",
+        "keywords": [
+          "education",
+          "teaching",
+          "edtech",
+          "e-learning",
+          "training"
+        ],
+        "demand": "High",
+        "growth": "+120% by 2035"
+      },
+      {
+        "name": "Healthcare",
+        "keywords": [
+          "medical",
+          "health",
+          "doctor",
+          "nurse",
+          "pharmacy"
+        ],
+        "demand": "Very High",
+        "growth": "+90% by 2035"
+      },
+      {
+        "name": "Textile & Manufacturing",
+        "keywords": [
+          "textile",
+          "manufacturing",
+          "production",
+          "industrial",
+          "fashion"
+        ],
+        "demand": "Medium-High",
+        "growth": "+50% by 2035"
+      },
+      {
+        "name": "Renewable Energy",
+        "keywords": [
+          "energy",
+          "solar",
+          "power",
+          "electricity",
+          "environment"
+        ],
+        "demand": "High",
+        "growth": "+100% by 2035"
+      }
+    ]
+  }
+}
