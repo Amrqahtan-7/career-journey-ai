@@ -890,11 +890,14 @@ export default function Home() {
                     setPasswordError("");
                     setShowPasswordModal(true);
                   } else {
+                    setShowPasswordModal(false);
+                    setPasswordInput("");
+                    setPasswordError("");
                     setView(v);
                   }
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border
-                  ${view === v
+                  ${(showPasswordModal ? pendingView === v : view === v)
                     ? dark ? "bg-indigo-600/80 border-indigo-500 text-white" : "bg-indigo-600 border-indigo-500 text-white"
                     : dark ? "bg-[#1a1a2e]/60 border-gray-700 text-gray-400 hover:text-white" : "bg-white/60 border-gray-200 text-gray-500 hover:text-black"}`}>
                 {label}
@@ -926,8 +929,8 @@ export default function Home() {
       </div>
 
       {/* Admin / Client */}
-      {view === "admin" && <div className="relative z-10 flex-1 overflow-y-auto"><AdminDashboard dark={dark} /></div>}
-      {view === "client" && <div className="relative z-10 flex-1 overflow-y-auto"><ClientDashboard dark={dark} /></div>}
+      {view === "admin" && !showPasswordModal && <div className="relative z-10 flex-1 overflow-y-auto"><AdminDashboard dark={dark} /></div>}
+      {view === "client" && !showPasswordModal && <div className="relative z-10 flex-1 overflow-y-auto"><ClientDashboard dark={dark} /></div>}
 
       {/* ── USER CHAT ── */}
       {view === "user" && !showPasswordModal && (
