@@ -930,7 +930,7 @@ export default function Home() {
       {view === "client" && <div className="relative z-10 flex-1 overflow-y-auto"><ClientDashboard dark={dark} /></div>}
 
       {/* ── USER CHAT ── */}
-      {view === "user" && (
+      {view === "user" && !showPasswordModal && (
         <>
           <div className="relative z-10 flex-1 overflow-y-auto px-6 py-6">
             {messages.length === 0 && (
@@ -1045,38 +1045,79 @@ export default function Home() {
         </>
       )}
 
-      {/* ── PASSWORD MODAL ── */}
+      {/* ── PASSWORD SCREEN (full page, renders inside layout) ── */}
       {showPasswordModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className={`rounded-2xl border p-6 w-80 shadow-2xl ${dark ? "bg-[#13131f] border-gray-700" : "bg-white border-gray-200"}`}>
-            <div className={`text-lg font-bold mb-1 ${dark ? "text-white" : "text-black"}`}>
-              {pendingView === "admin" ? "⚙️ Admin Access" : "🏢 Client Access"}
+        <div className="relative z-10 flex-1 flex items-center justify-center px-6">
+          <div className="w-full max-w-md">
+            {/* Icon + Title */}
+            <div className="text-center mb-8">
+              <div className={`inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-5 text-4xl shadow-2xl border
+                ${pendingView === "admin"
+                  ? dark ? "bg-indigo-900/60 border-indigo-700/60" : "bg-indigo-50 border-indigo-200"
+                  : dark ? "bg-emerald-900/60 border-emerald-700/60" : "bg-emerald-50 border-emerald-200"}`}>
+                {pendingView === "admin" ? "⚙️" : "🏢"}
+              </div>
+              <h2 className={`text-2xl font-bold mb-2 ${dark ? "text-white" : "text-gray-900"}`}>
+                {pendingView === "admin" ? "Admin Access" : "Client Access"}
+              </h2>
+              <p className={`text-sm ${dark ? "text-gray-400" : "text-gray-500"}`}>
+                This area is protected. Enter the password to continue.
+              </p>
             </div>
-            <div className={`text-sm mb-4 ${dark ? "text-gray-400" : "text-gray-500"}`}>
-              Enter password to continue
+
+            {/* Password card */}
+            <div className={`rounded-3xl border p-8 backdrop-blur-xl shadow-2xl
+              ${dark ? "bg-[#13131f]/80 border-gray-700/60" : "bg-white/90 border-gray-200"}`}>
+
+              <label className={`block text-xs font-bold uppercase tracking-widest mb-2
+                ${dark ? "text-gray-400" : "text-gray-500"}`}>
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Enter password..."
+                value={passwordInput}
+                onChange={e => { setPasswordInput(e.target.value); setPasswordError(""); }}
+                onKeyDown={e => { if (e.key === "Enter") handlePasswordUnlock(); }}
+                className={`w-full px-5 py-4 rounded-2xl border outline-none text-base mb-3 transition-all
+                  focus:ring-2 focus:ring-indigo-500/40
+                  ${dark
+                    ? "bg-[#0d0d1a] border-gray-700 text-white placeholder-gray-600 focus:border-indigo-500"
+                    : "bg-gray-50 border-gray-300 text-black placeholder-gray-400 focus:border-indigo-400"}`}
+                autoFocus
+              />
+
+              {/* Error message */}
+              {passwordError && (
+                <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl mb-4 text-sm
+                  ${dark ? "bg-red-900/30 border border-red-800/50 text-red-400" : "bg-red-50 border border-red-200 text-red-600"}`}>
+                  <span>⚠️</span> {passwordError}
+                </div>
+              )}
+
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => { setShowPasswordModal(false); setPasswordInput(""); setPasswordError(""); }}
+                  className={`flex-1 py-3.5 rounded-2xl border text-sm font-semibold transition-all
+                    ${dark ? "border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 hover:bg-white/5" : "border-gray-300 text-gray-500 hover:text-black hover:bg-gray-50"}`}>
+                  ← Back
+                </button>
+                <button
+                  onClick={handlePasswordUnlock}
+                  className={`flex-1 py-3.5 rounded-2xl text-white text-sm font-semibold transition-all shadow-lg
+                    ${pendingView === "admin"
+                      ? "bg-indigo-600 hover:bg-indigo-500 shadow-indigo-900/30"
+                      : "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/30"}`}>
+                  Unlock 🔓
+                </button>
+              </div>
             </div>
-            <input
-              type="password"
-              placeholder="Enter password..."
-              value={passwordInput}
-              onChange={e => { setPasswordInput(e.target.value); setPasswordError(""); }}
-              onKeyDown={e => { if (e.key === "Enter") handlePasswordUnlock(); }}
-              className={`w-full px-4 py-2.5 rounded-xl border outline-none text-sm mb-2 ${dark ? "bg-[#1a1a2e] border-gray-700 text-white placeholder-gray-600" : "bg-gray-50 border-gray-300 text-black placeholder-gray-400"}`}
-              autoFocus
-            />
-            {passwordError && <div className="text-red-400 text-xs mb-3">{passwordError}</div>}
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={() => setShowPasswordModal(false)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-medium ${dark ? "border-gray-700 text-gray-400 hover:text-white" : "border-gray-300 text-gray-500 hover:text-black"}`}>
-                Cancel
-              </button>
-              <button
-                onClick={handlePasswordUnlock}
-                className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium">
-                Unlock
-              </button>
-            </div>
+
+            {/* Hint */}
+            <p className={`text-center text-xs mt-4 ${dark ? "text-gray-700" : "text-gray-400"}`}>
+              {pendingView === "admin" ? "Admin password required for system access" : "Client password required for employer view"}
+            </p>
           </div>
         </div>
       )}
