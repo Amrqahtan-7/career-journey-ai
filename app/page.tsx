@@ -879,7 +879,17 @@ export default function Home() {
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <div className="flex gap-1">
             {([["user", "👤 User"], ["admin", "⚙️ Admin"], ["client", "🏢 Client"]] as [DashboardView, string][]).map(([v, label]) => (
-              <button key={v} onClick={() => setView(v)}
+  <button key={v} onClick={() => {
+    if (v === "admin") {
+      const pwd = prompt("Enter Admin Password:");
+      if (pwd !== "admin123") { alert("Wrong password!"); return; }
+    }
+    if (v === "client") {
+      const pwd = prompt("Enter Client Password:");
+      if (pwd !== "client123") { alert("Wrong password!"); return; }
+    }
+    setView(v);
+  }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border
                   ${view === v
                     ? dark ? "bg-indigo-600/80 border-indigo-500 text-white" : "bg-indigo-600 border-indigo-500 text-white"
