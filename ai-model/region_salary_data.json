@@ -1,0 +1,408 @@
+{
+  "USA": {
+    "Backend Development": {
+      "avg_usd": 177802.42317557253,
+      "count": 655
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 223664.4186694561,
+      "count": 239
+    },
+    "Cybersecurity": {
+      "avg_usd": 197268.32800472973,
+      "count": 296
+    },
+    "Data Science & ML": {
+      "avg_usd": 217848.2858606509,
+      "count": 676
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 187536.58216918772,
+      "count": 357
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 200379.39682739726,
+      "count": 511
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 172659.89915508984,
+      "count": 334
+    },
+    "Frontend Development": {
+      "avg_usd": 151395.37980278744,
+      "count": 574
+    },
+    "Full-Stack Development": {
+      "avg_usd": 186433.20962522522,
+      "count": 777
+    },
+    "Game Development": {
+      "avg_usd": 142633.88373568904,
+      "count": 283
+    },
+    "Mobile Development": {
+      "avg_usd": 161310.5690210291,
+      "count": 447
+    },
+    "Product Management": {
+      "avg_usd": 205205.6160939394,
+      "count": 528
+    },
+    "QA & Testing": {
+      "avg_usd": 134001.12548219896,
+      "count": 382
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 202588.57836754966,
+      "count": 302
+    }
+  },
+  "Europe": {
+    "Backend Development": {
+      "avg_usd": 160619.73577297298,
+      "count": 111
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 216196.01708108108,
+      "count": 37
+    },
+    "Cybersecurity": {
+      "avg_usd": 165231.50527058827,
+      "count": 51
+    },
+    "Data Science & ML": {
+      "avg_usd": 200026.12690588235,
+      "count": 102
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 170405.3053963636,
+      "count": 55
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 184699.9088383562,
+      "count": 73
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 148886.72952631582,
+      "count": 38
+    },
+    "Frontend Development": {
+      "avg_usd": 145861.10974020622,
+      "count": 97
+    },
+    "Full-Stack Development": {
+      "avg_usd": 167925.1691883495,
+      "count": 103
+    },
+    "Game Development": {
+      "avg_usd": 121108.41885405409,
+      "count": 37
+    },
+    "Mobile Development": {
+      "avg_usd": 150987.01884923078,
+      "count": 65
+    },
+    "Product Management": {
+      "avg_usd": 180342.07670769232,
+      "count": 78
+    },
+    "QA & Testing": {
+      "avg_usd": 118218.35074285713,
+      "count": 63
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 191731.01666086956,
+      "count": 46
+    }
+  },
+  "UK": {
+    "Backend Development": {
+      "avg_usd": 246217.73344470584,
+      "count": 85
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 330997.9518857143,
+      "count": 35
+    },
+    "Cybersecurity": {
+      "avg_usd": 271916.41859459464,
+      "count": 37
+    },
+    "Data Science & ML": {
+      "avg_usd": 312860.676430137,
+      "count": 73
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 278640.50335142855,
+      "count": 35
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 278046.46939787234,
+      "count": 47
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 238066.78219736842,
+      "count": 38
+    },
+    "Frontend Development": {
+      "avg_usd": 197760.10133432836,
+      "count": 67
+    },
+    "Full-Stack Development": {
+      "avg_usd": 259338.67564367814,
+      "count": 87
+    },
+    "Game Development": {
+      "avg_usd": 203757.73235333333,
+      "count": 15
+    },
+    "Mobile Development": {
+      "avg_usd": 218844.39315576918,
+      "count": 52
+    },
+    "Product Management": {
+      "avg_usd": 289180.2626473684,
+      "count": 57
+    },
+    "QA & Testing": {
+      "avg_usd": 184566.48126,
+      "count": 45
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 255477.4777833333,
+      "count": 36
+    }
+  },
+  "Australia": {
+    "Backend Development": {
+      "avg_usd": 109959.05217142857,
+      "count": 35
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 153278.480875,
+      "count": 8
+    },
+    "Cybersecurity": {
+      "avg_usd": 134309.38441304347,
+      "count": 23
+    },
+    "Data Science & ML": {
+      "avg_usd": 143086.81979729727,
+      "count": 37
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 125003.13525000002,
+      "count": 26
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 132862.97115,
+      "count": 30
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 111296.0668181818,
+      "count": 22
+    },
+    "Frontend Development": {
+      "avg_usd": 100174.09099999999,
+      "count": 39
+    },
+    "Full-Stack Development": {
+      "avg_usd": 113252.57177,
+      "count": 50
+    },
+    "Game Development": {
+      "avg_usd": 82950.7432,
+      "count": 15
+    },
+    "Mobile Development": {
+      "avg_usd": 99112.99009677421,
+      "count": 31
+    },
+    "Product Management": {
+      "avg_usd": 130073.14106944446,
+      "count": 36
+    },
+    "QA & Testing": {
+      "avg_usd": 93105.44225806452,
+      "count": 31
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 124519.42154166667,
+      "count": 12
+    }
+  },
+  "Japan": {
+    "Backend Development": {
+      "avg_usd": 1219.3923829375,
+      "count": 32
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 1499.791382,
+      "count": 7
+    },
+    "Cybersecurity": {
+      "avg_usd": 1160.590786076923,
+      "count": 13
+    },
+    "Data Science & ML": {
+      "avg_usd": 1460.8071430625,
+      "count": 32
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 1249.4402591538465,
+      "count": 13
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 1257.601524,
+      "count": 22
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 1167.2678847272728,
+      "count": 11
+    },
+    "Frontend Development": {
+      "avg_usd": 940.7733979999999,
+      "count": 24
+    },
+    "Full-Stack Development": {
+      "avg_usd": 1118.455631948718,
+      "count": 39
+    },
+    "Game Development": {
+      "avg_usd": 845.4245590000003,
+      "count": 13
+    },
+    "Mobile Development": {
+      "avg_usd": 1039.38150225,
+      "count": 24
+    },
+    "Product Management": {
+      "avg_usd": 1435.38638848,
+      "count": 25
+    },
+    "QA & Testing": {
+      "avg_usd": 770.0109376875,
+      "count": 16
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 1400.034926842105,
+      "count": 19
+    }
+  },
+  "Singapore": {
+    "Backend Development": {
+      "avg_usd": 119035.12232272727,
+      "count": 44
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 163122.35756666667,
+      "count": 18
+    },
+    "Cybersecurity": {
+      "avg_usd": 150126.88382666663,
+      "count": 15
+    },
+    "Data Science & ML": {
+      "avg_usd": 157746.79123,
+      "count": 40
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 132779.26529166664,
+      "count": 24
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 144416.61219999997,
+      "count": 37
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 118861.51817857141,
+      "count": 28
+    },
+    "Frontend Development": {
+      "avg_usd": 101729.5300142857,
+      "count": 28
+    },
+    "Full-Stack Development": {
+      "avg_usd": 123827.08285106384,
+      "count": 47
+    },
+    "Game Development": {
+      "avg_usd": 109840.38194285714,
+      "count": 14
+    },
+    "Mobile Development": {
+      "avg_usd": 114893.01855294117,
+      "count": 34
+    },
+    "Product Management": {
+      "avg_usd": 152062.8846153846,
+      "count": 26
+    },
+    "QA & Testing": {
+      "avg_usd": 94767.41532380953,
+      "count": 21
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 157711.32992941176,
+      "count": 17
+    }
+  },
+  "India": {
+    "Backend Development": {
+      "avg_usd": 631.060646117647,
+      "count": 85
+    },
+    "Blockchain & Web3": {
+      "avg_usd": 826.223115652174,
+      "count": 46
+    },
+    "Cybersecurity": {
+      "avg_usd": 732.5994300000002,
+      "count": 52
+    },
+    "Data Science & ML": {
+      "avg_usd": 839.6274477419356,
+      "count": 93
+    },
+    "Database & Data Engineering": {
+      "avg_usd": 688.8306931034483,
+      "count": 58
+    },
+    "DevOps & Cloud": {
+      "avg_usd": 705.0935638095237,
+      "count": 63
+    },
+    "Embedded Systems & IoT": {
+      "avg_usd": 654.6725033333335,
+      "count": 36
+    },
+    "Frontend Development": {
+      "avg_usd": 562.893444137931,
+      "count": 87
+    },
+    "Full-Stack Development": {
+      "avg_usd": 702.1294144615385,
+      "count": 130
+    },
+    "Game Development": {
+      "avg_usd": 473.6120571428571,
+      "count": 35
+    },
+    "Mobile Development": {
+      "avg_usd": 597.7156825531915,
+      "count": 47
+    },
+    "Product Management": {
+      "avg_usd": 739.4925963157895,
+      "count": 76
+    },
+    "QA & Testing": {
+      "avg_usd": 493.67703400000005,
+      "count": 60
+    },
+    "Site Reliability Engineering": {
+      "avg_usd": 659.7388457142858,
+      "count": 28
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import os
 import joblib
 import json
 import pandas as pd
@@ -11,22 +12,22 @@ app = Flask(__name__)
 CORS(app)
 
 print("Loading models...")
-salary_model = joblib.load("career_model.pkl")
-encoders = joblib.load("career_data.pkl")
-nlp_model = joblib.load("nlp_model.pkl")
+salary_model    = joblib.load("career_model.pkl")
+encoders        = joblib.load("career_data.pkl")
+nlp_model       = joblib.load("nlp_model.pkl")
 onet_vectorizer = joblib.load("onet_vectorizer.pkl")
-onet_matrix = joblib.load("onet_matrix.pkl")
-df_occ = joblib.load("onet_occupations.pkl")
-skills_map = joblib.load("onet_skills_map.pkl")
-edu_map = joblib.load("onet_edu_map.pkl")
+onet_matrix     = joblib.load("onet_matrix.pkl")
+df_occ          = joblib.load("onet_occupations.pkl")
+skills_map      = joblib.load("onet_skills_map.pkl")
+edu_map         = joblib.load("onet_edu_map.pkl")
 
 df_salary = pd.read_csv("tech_salary_dataset.csv")
-df_salary["skills"] = df_salary["skills"].fillna("")
-df_salary["certifications"] = df_salary["certifications"].fillna("")
-df_salary["job_title"] = df_salary["job_title"].fillna("")
+df_salary["skills"]             = df_salary["skills"].fillna("")
+df_salary["certifications"]     = df_salary["certifications"].fillna("")
+df_salary["job_title"]          = df_salary["job_title"].fillna("")
 df_salary["primary_tech_field"] = df_salary["primary_tech_field"].fillna("")
-df_salary["location"] = df_salary["location"].fillna("")
-df_salary["currency"] = df_salary["currency"].fillna("USD")
+df_salary["location"]           = df_salary["location"].fillna("")
+df_salary["currency"]           = df_salary["currency"].fillna("USD")
 
 with open("career_data.json") as f:
     unique_values = json.load(f)
@@ -34,26 +35,26 @@ with open("career_data.json") as f:
 try:
     with open("region_salary_data.json") as f:
         region_salary_data = json.load(f)
-except:
+except Exception:
     region_salary_data = {}
 
 try:
     with open("vision_sectors.json") as f:
         VISION_SECTORS = json.load(f)
-except:
+except Exception:
     VISION_SECTORS = {}
 
 try:
     with open("admin_stats.json") as f:
         admin_stats_base = json.load(f)
-except:
+except Exception:
     admin_stats_base = {}
 
 print("All models loaded!")
 
-search_log = []
-popular_careers = Counter()
-popular_regions = Counter()
+search_log       = []
+popular_careers  = Counter()
+popular_regions  = Counter()
 
 CURRENCY_SYMBOLS = {
     "KSA":       ("SAR", 3.75),
@@ -68,7 +69,6 @@ CURRENCY_SYMBOLS = {
     "USA":       ("USD", 1.0),
 }
 
-# ===== O*NET salary estimates (USD/year) =====
 ONET_SALARY_ESTIMATES_USD = {
     # Healthcare
     "surgeon": 250000, "physician": 200000, "doctor": 190000,
@@ -136,25 +136,24 @@ ONET_SALARY_ESTIMATES_USD = {
     "supply chain": 75000, "warehouse": 38000,
     # Social Services
     "social worker": 52000, "social": 50000, "community": 48000,
-    "nonprofit": 50000, "counselor": 55000,
+    "nonprofit": 50000,
     # Hospitality & Food
     "chef": 55000, "cook": 35000, "baker": 33000,
     "hotel manager": 65000, "hospitality": 50000,
     "event planner": 52000, "travel": 48000, "tourism": 50000,
-    # Default fallback
+    # Fallback
     "supervisor": 62000, "coordinator": 52000, "specialist": 60000,
     "operator": 48000, "assistant": 42000, "clerk": 38000,
 }
 
 def estimate_onet_salary(title: str) -> int:
-    title_lower = title.lower()
-    # Try longest match first for accuracy
+    title_lower   = title.lower()
     best_match_len = 0
-    best_salary = 55000  # default
+    best_salary    = 55000
     for keyword, salary in ONET_SALARY_ESTIMATES_USD.items():
         if keyword in title_lower and len(keyword) > best_match_len:
             best_match_len = len(keyword)
-            best_salary = salary
+            best_salary    = salary
     return best_salary
 
 def fmt_amount(n, symbol):
@@ -186,10 +185,10 @@ def fmt_amount(n, symbol):
 
 def convert_salary(usd_salary, region):
     symbol, rate = CURRENCY_SYMBOLS.get(region, ("USD", 1.0))
-    local = usd_salary * rate
-    display = fmt_amount(local, symbol) + "/yr"
-    low     = fmt_amount(local * 0.85, symbol)
-    high    = fmt_amount(local * 1.15, symbol)
+    local        = usd_salary * rate
+    display      = fmt_amount(local, symbol) + "/yr"
+    low          = fmt_amount(local * 0.85, symbol)
+    high         = fmt_amount(local * 1.15, symbol)
     return display, f"{low} – {high}/yr"
 
 ROADMAPS = {
@@ -276,7 +275,7 @@ DEMAND_MAP = {
 
 def build_onet_roadmap(title, skills, edu):
     title_lower = title.lower()
-    roadmap = []
+    roadmap     = []
     if edu and str(edu).lower() not in ["nan", "none", ""]:
         roadmap.append(f"Get the required education: {edu}")
     else:
@@ -338,7 +337,7 @@ def get_skills_gap(user_skills, required_skills):
     have, missing = [], []
     for skill in required_skills:
         skill_lower = skill.lower().strip()
-        matched = any(skill_lower in u or u in skill_lower for u in user_lower)
+        matched     = any(skill_lower in u or u in skill_lower for u in user_lower)
         if matched:
             have.append(skill)
         else:
@@ -348,7 +347,7 @@ def get_skills_gap(user_skills, required_skills):
 def get_vision_alignment(career_title, tech_field, region):
     if region not in VISION_SECTORS:
         return None
-    vision = VISION_SECTORS[region]
+    vision      = VISION_SECTORS[region]
     title_lower = career_title.lower()
     field_lower = tech_field.lower() if tech_field else ""
     for sector in vision["sectors"]:
@@ -364,8 +363,8 @@ def get_vision_alignment(career_title, tech_field, region):
     return None
 
 def get_tech_recommendations(user_text, experience, education, region="USA", user_skills=None):
-    proba   = nlp_model.predict_proba([user_text.lower()])[0]
-    classes = nlp_model.classes_
+    proba     = nlp_model.predict_proba([user_text.lower()])[0]
+    classes   = nlp_model.classes_
     max_proba = float(proba.max())
     dynamic_threshold = max_proba * 0.40
 
@@ -415,10 +414,10 @@ def get_tech_recommendations(user_text, experience, education, region="USA", use
             final_salary_usd = avg_salary
 
         salary_display, salary_range = convert_salary(final_salary_usd, region)
-        exp_level    = "Junior" if experience < 2 else "Mid-level" if experience < 5 else "Senior"
-        have_skills, missing_skills = get_skills_gap(user_skills or [], top_skills)
-        vision_align = get_vision_alignment(top_job, field, region)
-        popular_careers[top_job] += 1
+        exp_level                    = "Junior" if experience < 2 else "Mid-level" if experience < 5 else "Senior"
+        have_skills, missing_skills  = get_skills_gap(user_skills or [], top_skills)
+        vision_align                 = get_vision_alignment(top_job, field, region)
+        popular_careers[top_job]    += 1
 
         recommendations.append({
             "career_title":     top_job,
@@ -458,7 +457,7 @@ def get_onet_recommendations(user_text, experience, region="USA", user_skills=No
     ][:10]
 
     recommendations = []
-    exp_level = "Junior" if experience < 2 else "Mid-level" if experience < 5 else "Senior"
+    exp_level       = "Junior" if experience < 2 else "Mid-level" if experience < 5 else "Senior"
 
     for idx in top_indices:
         row        = df_occ.iloc[idx]
@@ -473,38 +472,39 @@ def get_onet_recommendations(user_text, experience, region="USA", user_skills=No
         edu_req     = edu_map.get(occ_code, "Relevant degree or certification")
         roadmap     = build_onet_roadmap(title, onet_skills, edu_req)
 
-        # Estimate salary for ALL O*NET careers
-        est_usd = estimate_onet_salary(title)
-        sal_display, sal_range = convert_salary(est_usd, region)
-
-        have_skills, missing_skills = get_skills_gap(user_skills or [], onet_skills)
-        vision_align = get_vision_alignment(title, "", region)
-        popular_careers[title] += 1
+        est_usd                      = estimate_onet_salary(title)
+        sal_display, sal_range       = convert_salary(est_usd, region)
+        have_skills, missing_skills  = get_skills_gap(user_skills or [], onet_skills)
+        vision_align                 = get_vision_alignment(title, "", region)
+        popular_careers[title]      += 1
 
         recommendations.append({
-            "career_title":     title,
-            "tech_field":       "General Career",
-            "estimated_salary": est_usd,
-            "salary_display":   sal_display,
-            "salary_range":     sal_range,
-            "currency":         CURRENCY_SYMBOLS.get(region, ("USD", 1.0))[0],
-            "region":           region,
-            "future_demand":    "High",
-            "required_skills":  onet_skills[:6],
-            "skills_you_have":  have_skills,
-            "skills_to_learn":  missing_skills,
-            "certifications":   [],
+            "career_title":       title,
+            "tech_field":         "General Career",
+            "estimated_salary":   est_usd,
+            "salary_display":     sal_display,
+            "salary_range":       sal_range,
+            "currency":           CURRENCY_SYMBOLS.get(region, ("USD", 1.0))[0],
+            "region":             region,
+            "future_demand":      "High",
+            "required_skills":    onet_skills[:6],
+            "skills_you_have":    have_skills,
+            "skills_to_learn":    missing_skills,
+            "certifications":     [],
             "education_required": str(edu_req) if edu_req else "Relevant degree",
-            "roadmap":          roadmap,
-            "experience_level": exp_level,
-            "data_points":      len(df_occ),
-            "confidence":       round(similarity * 100, 1),
-            "description":      desc[:250] + "..." if len(desc) > 250 else desc,
-            "source":           "onet",
-            "vision_alignment": vision_align,
+            "roadmap":            roadmap,
+            "experience_level":   exp_level,
+            "data_points":        len(df_occ),
+            "confidence":         round(similarity * 100, 1),
+            "description":        desc[:250] + "..." if len(desc) > 250 else desc,
+            "source":             "onet",
+            "vision_alignment":   vision_align,
         })
 
     return recommendations
+
+
+# ─────────────────────────── Routes ───────────────────────────
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -547,17 +547,21 @@ def predict():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/options", methods=["GET"])
 def options():
     return jsonify(unique_values)
+
 
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "running"})
 
+
 @app.route("/vision", methods=["GET"])
 def vision():
     return jsonify(VISION_SECTORS)
+
 
 @app.route("/admin/stats", methods=["GET"])
 def admin_stats():
@@ -576,13 +580,13 @@ def admin_stats():
         },
     })
 
+
 @app.route("/skills-gap", methods=["POST"])
 def skills_gap_endpoint():
     try:
         data        = request.json
         user_skills = data.get("user_skills", [])
         career      = data.get("career", "")
-        region      = data.get("region", "USA")
 
         query_vec    = onet_vectorizer.transform([career.lower()])
         similarities = cosine_similarity(query_vec, onet_matrix)[0]
@@ -602,5 +606,9 @@ def skills_gap_endpoint():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# ─────────────────────────── Entry Point ───────────────────────────
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
