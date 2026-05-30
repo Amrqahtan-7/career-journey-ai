@@ -138,7 +138,6 @@ function getSmallTalkReply(
 ): { reply: string | null; newState: ConvState; langSwitch?: "ar" | "ur" | "en" } {
   const lower = text.toLowerCase().trim();
 
-  // Language switch commands
   if (/use arabic|switch to arabic|استخدم العربية|تكلم عربي|بالعربي/.test(lower))
     return { reply: getReply("langSwitch", "ar"), newState: convState, langSwitch: "ar" };
   if (/use urdu|switch to urdu|اردو میں|اردو استعمال|اردو بولو/.test(lower))
@@ -146,13 +145,11 @@ function getSmallTalkReply(
   if (/use english|switch to english|speak english|english please/.test(lower))
     return { reply: getReply("langSwitch", "en"), newState: convState, langSwitch: "en" };
 
-  // Language capability questions
   if (/do you (know|speak|understand) arabic|can you (speak|use|write) arabic/.test(lower))
     return { reply: getReply("speaksArabic", activeLang), newState: convState };
   if (/do you (know|speak|understand) urdu|can you (speak|use|write) urdu/.test(lower))
     return { reply: getReply("speaksUrdu", activeLang), newState: convState };
 
-  // Greetings
   if (
     /^(hi|hello|hey|howdy|yo|مرحبا|هاي|السلام عليكم|اهلا|هلا|ہیلو|آداب|سلام)[\s!.]*$/.test(lower) ||
     /^(مرحب|أهلا|هلا|سلام عليكم)/.test(text)
@@ -181,7 +178,7 @@ function getSmallTalkReply(
     return { reply: getReply("whatCanYouDo", activeLang), newState: convState };
   if (/who are you|what are you|are you ai|من أنت|آپ کون ہیں/.test(lower))
     return { reply: getReply("whoAreYou", activeLang), newState: convState };
-  // Nonsense / joke / non-career input detector
+
   const jokeWords = /^(lol|haha|hehe|kidding|joking|just kidding|test|testing|asdf|qwerty|blah|nothing|idk|whatever|random|bored|hi there|hey there|sup|wassup|yo+|ok|okay|k|yes|no|maybe|sure|cool|nice|great|wow|omg|wtf|hmm|uh|um|err)[\s!?.]*$/;
   if (jokeWords.test(lower) || lower.length < 3)
     return {
@@ -205,7 +202,7 @@ function getSmallTalkReply(
   return { reply: null, newState: convState };
 }
 
-// ─── Animated Background (UNCHANGED from old code) ───────────────────────────
+// ─── Animated Background ──────────────────────────────────────────────────────
 function AnimatedBackground({ dark }: { dark: boolean }) {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -245,7 +242,7 @@ function AnimatedBackground({ dark }: { dark: boolean }) {
   );
 }
 
-// ─── Career Components (UNCHANGED from old code) ──────────────────────────────
+// ─── Career Components ────────────────────────────────────────────────────────
 function Section({ title, children, dark }: { title: string; children: React.ReactNode; dark: boolean }) {
   return (
     <div className="mb-5">
@@ -467,7 +464,7 @@ function RecommendationsCard({ recommendations, dark }: { recommendations: Caree
   );
 }
 
-// ─── Admin Dashboard (UNCHANGED from old code) ───────────────────────────────
+// ─── Admin Dashboard ──────────────────────────────────────────────────────────
 function AdminDashboard({ dark }: { dark: boolean }) {
   const mockStats = {
     total_searches: 1284, total_occupations: 1016, tech_fields: 14, salary_records: 50000,
@@ -548,7 +545,7 @@ function AdminDashboard({ dark }: { dark: boolean }) {
   );
 }
 
-// ─── Client Dashboard (UNCHANGED from old code) ───────────────────────────────
+// ─── Client Dashboard ─────────────────────────────────────────────────────────
 function ClientDashboard({ dark }: { dark: boolean }) {
   const [region, setRegion] = useState("KSA");
   const VISIONS: Record<string, any> = {
@@ -637,10 +634,12 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [convState, setConvState] = useState<ConvState>("idle");
   const [view, setView] = useState<DashboardView>("user");
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [pendingView, setPendingView] = useState<DashboardView | null>(null);
+  const [passwordError, setPasswordError] = useState("");
   const [region, setRegion] = useState("UAE");
-  // NEW: active language state for user chat
   const [activeLang, setActiveLang] = useState<"en" | "ar" | "ur">("en");
-  // NEW: voice listening state
   const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -650,7 +649,18 @@ export default function Home() {
 
   const selectedRegion = REGIONS.find(r => r.value === region) || REGIONS[0];
 
-  // ── Voice Input (NEW) ──────────────────────────────────────────────────────
+  // ── Password Modal Handler ─────────────────────────────────────────────────
+  const handlePasswordUnlock = () => {
+    const correct = pendingView === "admin" ? "admin123" : "client123";
+    if (passwordInput === correct) {
+      setView(pendingView!);
+      setShowPasswordModal(false);
+    } else {
+      setPasswordError("Wrong password. Try again.");
+    }
+  };
+
+  // ── Voice Input ────────────────────────────────────────────────────────────
   const startListening = useCallback(() => {
     const SR =
       (window as any).SpeechRecognition ||
@@ -675,7 +685,7 @@ export default function Home() {
     setIsListening(false);
   }, []);
 
-  // ── CV Upload (NEW) ────────────────────────────────────────────────────────
+  // ── CV Upload ──────────────────────────────────────────────────────────────
   const handleFileUpload = useCallback(async (file: File) => {
     const allowed = ["application/pdf", "text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
     if (!allowed.includes(file.type) && !file.name.endsWith(".txt") && !file.name.endsWith(".pdf")) {
@@ -739,7 +749,6 @@ export default function Home() {
     reader.readAsText(file);
   }, [region]);
 
-  // Translate Arabic/Urdu interests to English keywords for Flask
   const translateToEnglish = (text: string): string => {
     const map: [RegExp, string][] = [
       [/برمج|كودينج|تكنولوج|كمبيوتر|حاسوب|برامج/g, "programming coding software"],
@@ -798,33 +807,28 @@ export default function Home() {
     setInput("");
     setMessages(prev => [...prev, { sender: "user", text: userText }]);
 
-    // Pass activeLang to small talk so replies match active language
     const { reply: stReply, newState, langSwitch } = getSmallTalkReply(userText, convState, activeLang);
     const newLang = langSwitch ?? activeLang;
     if (langSwitch) setActiveLang(langSwitch);
 
-    // Strip lang-switch commands to get clean interests text
     const cleanText = userText
       .replace(/use arabic|switch to arabic|استخدم العربية|تكلم عربي|بالعربي/gi, "")
       .replace(/use urdu|switch to urdu|اردو میں|اردو استعمال|اردو بولو/gi, "")
       .replace(/use english|switch to english|speak english|english please/gi, "")
       .replace(/,\s*$/, "").trim();
 
-    // If it's ONLY a lang switch with no real interests — just show lang reply
     if (stReply && cleanText.length < 3) {
       setConvState(newState);
       setTimeout(() => setMessages(prev => [...prev, { sender: "ai", text: stReply }]), 400);
       return;
     }
 
-    // If small talk only (no lang switch mixed in) — show small talk reply
     if (stReply && !langSwitch) {
       setConvState(newState);
       setTimeout(() => setMessages(prev => [...prev, { sender: "ai", text: stReply }]), 400);
       return;
     }
 
-    // If lang switch WITH interests: show lang confirmation first, then search
     if (langSwitch && cleanText.length >= 3) {
       setTimeout(() => setMessages(prev => [...prev, { sender: "ai", text: stReply! }]), 400);
     }
@@ -835,7 +839,6 @@ export default function Home() {
 
     try {
       const searchText = cleanText.length >= 3 ? cleanText : userText;
-      // Translate Arabic/Urdu to English so Flask ML model understands
       const flaskText = translateToEnglish(searchText);
       const res = await fetch("/api/predict", {
         method: "POST",
@@ -874,22 +877,22 @@ export default function Home() {
     <main className={`h-screen flex flex-col transition-all duration-300 relative ${dark ? "text-white" : "text-gray-900"}`}>
       <AnimatedBackground dark={dark} />
 
-      {/* ── HEADER (UNCHANGED from old code) ── */}
+      {/* ── HEADER ── */}
       <div className={`relative z-10 flex-shrink-0 px-6 py-3 border-b backdrop-blur-xl transition-all ${dark ? "bg-[#080812]/80 border-gray-800/60" : "bg-white/80 border-gray-300/60"}`}>
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <div className="flex gap-1">
             {([["user", "👤 User"], ["admin", "⚙️ Admin"], ["client", "🏢 Client"]] as [DashboardView, string][]).map(([v, label]) => (
-  <button key={v} onClick={() => {
-    if (v === "admin") {
-      const pwd = prompt("Enter Admin Password:");
-      if (pwd !== "admin123") { alert("Wrong password!"); return; }
-    }
-    if (v === "client") {
-      const pwd = prompt("Enter Client Password:");
-      if (pwd !== "client123") { alert("Wrong password!"); return; }
-    }
-    setView(v);
-  }}
+              <button key={v}
+                onClick={() => {
+                  if (v === "admin" || v === "client") {
+                    setPendingView(v);
+                    setPasswordInput("");
+                    setPasswordError("");
+                    setShowPasswordModal(true);
+                  } else {
+                    setView(v);
+                  }
+                }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border
                   ${view === v
                     ? dark ? "bg-indigo-600/80 border-indigo-500 text-white" : "bg-indigo-600 border-indigo-500 text-white"
@@ -922,7 +925,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Admin / Client (UNCHANGED) */}
+      {/* Admin / Client */}
       {view === "admin" && <div className="relative z-10 flex-1 overflow-y-auto"><AdminDashboard dark={dark} /></div>}
       {view === "client" && <div className="relative z-10 flex-1 overflow-y-auto"><ClientDashboard dark={dark} /></div>}
 
@@ -939,7 +942,6 @@ export default function Home() {
                 <p className={`text-sm mb-5 ${dark ? "text-gray-500" : "text-gray-400"}`}>
                   Results aligned with <span className="text-green-500 font-semibold">{selectedRegion.vision}</span> · Salaries in <strong>{selectedRegion.currency}</strong>
                 </p>
-                {/* Skills box REMOVED as requested */}
                 <div className="grid grid-cols-1 gap-2 text-left max-w-xl mx-auto">
                   {[
                     "I love helping people and saving lives",
@@ -989,10 +991,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── INPUT BAR (NEW: working voice + CV upload) ── */}
+          {/* ── INPUT BAR ── */}
           <div className={`relative z-10 flex-shrink-0 px-6 py-4 border-t backdrop-blur-xl transition-all ${dark ? "bg-[#080812]/70 border-gray-800/60" : "bg-white/70 border-gray-300/60"}`}>
             <div className={`max-w-5xl mx-auto rounded-[30px] flex items-center px-5 py-3 shadow-2xl border transition-all ${dark ? "bg-[#1a1a2e]/80 border-gray-700/60" : "bg-white border-gray-300"}`}>
-              {/* CV Upload button */}
               <label
                 className={`cursor-pointer p-2.5 rounded-2xl transition-all ${dark ? "text-gray-400 hover:text-white hover:bg-[#2a2a4a]" : "text-gray-500 hover:text-black hover:bg-gray-200"}`}
                 title="Upload CV (PDF/TXT)">
@@ -1024,14 +1025,12 @@ export default function Home() {
                 dir={isRTL ? "rtl" : "ltr"}
                 className={`flex-1 bg-transparent outline-none px-4 text-base ${dark ? "placeholder-gray-600 text-white" : "placeholder-gray-400 text-black"}`}
               />
-              {/* Voice button */}
               <button
                 onClick={isListening ? stopListening : startListening}
                 className={`p-2.5 rounded-2xl mr-1 transition-all ${isListening ? "bg-red-500/20 text-red-400 animate-pulse" : dark ? "text-gray-400 hover:text-white hover:bg-[#2a2a4a]" : "text-gray-500 hover:text-black hover:bg-gray-200"}`}
                 title={isListening ? "Stop listening" : "Voice input"}>
                 {isListening ? <MicOff size={20} strokeWidth={2.2} /> : <Mic size={20} strokeWidth={2.2} />}
               </button>
-              {/* Send button */}
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
@@ -1045,6 +1044,43 @@ export default function Home() {
           </div>
         </>
       )}
+
+      {/* ── PASSWORD MODAL ── */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className={`rounded-2xl border p-6 w-80 shadow-2xl ${dark ? "bg-[#13131f] border-gray-700" : "bg-white border-gray-200"}`}>
+            <div className={`text-lg font-bold mb-1 ${dark ? "text-white" : "text-black"}`}>
+              {pendingView === "admin" ? "⚙️ Admin Access" : "🏢 Client Access"}
+            </div>
+            <div className={`text-sm mb-4 ${dark ? "text-gray-400" : "text-gray-500"}`}>
+              Enter password to continue
+            </div>
+            <input
+              type="password"
+              placeholder="Enter password..."
+              value={passwordInput}
+              onChange={e => { setPasswordInput(e.target.value); setPasswordError(""); }}
+              onKeyDown={e => { if (e.key === "Enter") handlePasswordUnlock(); }}
+              className={`w-full px-4 py-2.5 rounded-xl border outline-none text-sm mb-2 ${dark ? "bg-[#1a1a2e] border-gray-700 text-white placeholder-gray-600" : "bg-gray-50 border-gray-300 text-black placeholder-gray-400"}`}
+              autoFocus
+            />
+            {passwordError && <div className="text-red-400 text-xs mb-3">{passwordError}</div>}
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={() => setShowPasswordModal(false)}
+                className={`flex-1 py-2 rounded-xl border text-sm font-medium ${dark ? "border-gray-700 text-gray-400 hover:text-white" : "border-gray-300 text-gray-500 hover:text-black"}`}>
+                Cancel
+              </button>
+              <button
+                onClick={handlePasswordUnlock}
+                className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium">
+                Unlock
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
