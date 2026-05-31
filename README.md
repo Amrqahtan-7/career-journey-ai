@@ -24,3 +24,4 @@ An AI-powered career guidance platform aligned with Vision 2030 🇸🇦🇦🇪
 - Live: https://career-journey-ai-app.vercel.app
 - Backend: https://huggingface.co/spaces/amrqahtan/career-ai-backend
 - Dataset: https://www.kaggle.com/datasets/amrqahtan7144/career-journey-ai-vision-2030-dataset
+- Demo Video: https://www.loom.com/share/023cbe60651e409eb1af05d47eec6b0c
