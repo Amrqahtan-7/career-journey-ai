@@ -477,7 +477,15 @@ function AdminDashboard({ dark }: { dark: boolean }) {
       { timestamp: "2024-01-15T10:20:00", query: "مجھے ٹیکنالوجی پسند ہے", region: "Pakistan", results: 4 },
     ]
   };
-  const [stats] = useState(mockStats);
+  const [stats, setStats] = useState<any>(mockStats);
+
+  useEffect(() => {
+    fetch("https://amrqahtan-career-ai-backend.hf.space/admin/stats")
+      .then(res => res.json())
+      .then(data => setStats({ ...mockStats, ...data }))
+      .catch(() => setStats(mockStats));
+  }, []);
+  
   const cards = [
     { icon: <BarChart2 size={20} />, label: "Total Searches", value: stats.total_searches.toLocaleString(), color: "text-indigo-400" },
     { icon: <Briefcase size={20} />, label: "Career Occupations", value: stats.total_occupations.toLocaleString(), color: "text-blue-400" },
