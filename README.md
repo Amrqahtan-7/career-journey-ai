@@ -21,5 +21,6 @@ An AI-powered career guidance platform aligned with Vision 2030 🇸🇦🇦🇪
 - Vision 2030/2035 alignment
 
 ## Links
-- Live: https://career-journey-ai-phi.vercel.app
+- Live: https://career-journey-ai-app.vercel.app
 - Backend: https://huggingface.co/spaces/amrqahtan/career-ai-backend
+- Dataset: https://www.kaggle.com/datasets/amrqahtan7144/career-journey-ai-vision-2030-dataset
