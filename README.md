@@ -20,6 +20,10 @@ An AI-powered career guidance platform aligned with Vision 2030 🇸🇦🇦🇪
 - Skills gap analysis & career roadmap
 - Vision 2030/2035 alignment
 
+## passwords 
+- admin = admin123
+- client = client123
+
 ## Links
 - Live: https://career-journey-ai-app.vercel.app
 - Backend: https://huggingface.co/spaces/amrqahtan/career-ai-backend
